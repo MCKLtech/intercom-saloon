@@ -8,7 +8,7 @@ class WordPressRateLimitStore implements RateLimitStore
 {
 
     /**
-     * A WordPress implementation of the RateLimitStore using Transients
+     * A custom WordPress implementation of the RateLimitStore using WP Transients
      */
 
     /**

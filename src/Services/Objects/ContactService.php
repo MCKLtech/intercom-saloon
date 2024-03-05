@@ -24,7 +24,8 @@ class ContactService extends Resource
 {
 
     /**
-     * Return a list of all Intercom Contacts
+     * Return a pagniated list of all Intercom Contacts
+     * @see https://developers.intercom.com/docs/references/rest-api/api.intercom.io/Contacts/ListContacts/
      *
      * @return CursorPaginator
      */
@@ -36,6 +37,7 @@ class ContactService extends Resource
 
     /**
      * Create an Intercom Contact
+     * @see https://developers.intercom.com/docs/references/rest-api/api.intercom.io/Contacts/CreateContact/
      *
      * @param CreateContact $contact
      * @return Contact
@@ -51,6 +53,7 @@ class ContactService extends Resource
 
     /**
      * Fetch a single Intercom Contact by Intercom Assigned ID
+     * @see https://developers.intercom.com/docs/references/rest-api/api.intercom.io/Contacts/ShowContact/
      *
      * @param string $intercom_id
      * @return Contact
@@ -66,6 +69,7 @@ class ContactService extends Resource
 
     /**
      * Update an Intercom Contact by Intercom Assigned ID
+     * @see https://developers.intercom.com/docs/references/rest-api/api.intercom.io/Contacts/UpdateContact/
      *
      * @param string $intercom_id
      * @param UpdateContact $contact
@@ -82,6 +86,7 @@ class ContactService extends Resource
 
     /**
      * Delete a Contact by Intercom Assigned ID
+     * @see https://developers.intercom.com/docs/references/rest-api/api.intercom.io/Contacts/DeleteContact/
      *
      * @param string $intercom_id
      * @return Response
@@ -97,6 +102,7 @@ class ContactService extends Resource
 
     /**
      * Search Intercom by Email. Option to search for exact match
+     * @see https://developers.intercom.com/docs/references/rest-api/api.intercom.io/Contacts/SearchContacts/
      *
      * @param string $email
      * @param bool $exact
@@ -122,6 +128,7 @@ class ContactService extends Resource
 
     /**
      * Add a note to a given Intercom Contact by Assigned Intercom ID
+     * @see https://developers.intercom.com/docs/references/rest-api/api.intercom.io/Contacts/listTagsForAContact/
      *
      * @param string $intercom_id
      * @param string $body
