@@ -24,7 +24,7 @@ class ContactService extends Resource
 {
 
     /**
-     * Return a pagniated list of all Intercom Contacts
+     * Return a paginated list of all Intercom Contacts
      * @see https://developers.intercom.com/docs/references/rest-api/api.intercom.io/Contacts/ListContacts/
      *
      * @return CursorPaginator
