@@ -43,7 +43,7 @@ class Add extends Request implements HasBody
             type: $tag['type'],
             id: $tag['id'],
             name: $tag['name'],
-            applied_at: Carbon::parse($tag['applied_at'])
+            applied_at: isset($tag['applied_at']) ? Carbon::parse($tag['applied_at']) : null
         );
     }
 

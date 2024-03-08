@@ -2,6 +2,7 @@
 
 namespace WooNinja\IntercomSaloon\Connectors;
 
+use InvalidArgumentException;
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -26,13 +27,23 @@ class IntercomConnector extends Connector implements HasPagination
 
     public int $rateLimit = 1000;
 
+    public int|null $apiVersion = null;
+
     public string $base_url = 'https://api.intercom.io/';
+
+    public string $region = 'US';
 
     public function resolveBaseUrl(): string
     {
         return $this->base_url;
     }
 
+    /**
+     * Dynamically change the base URL for the API e.g. Regions
+     *
+     * @param string $url
+     * @return void
+     */
     public function setBaseURL(string $url): void
     {
         $this->base_url = $url;
@@ -40,9 +51,67 @@ class IntercomConnector extends Connector implements HasPagination
 
     protected function defaultHeaders(): array
     {
-        return [
+        $headers = [
             'User-Agent' => 'WooNinja/Saloon-PHP-SDK'
         ];
+
+        if (is_numeric($this->apiVersion)) {
+            $headers['Intercom-Version'] = $this->apiVersion;
+        }
+
+        return $headers;
+    }
+
+    /**
+     * Change the API version. Defaults to latest (null)
+     * 
+     * @param $version
+     * @return void
+     */
+    public function setApiVersion($version): void
+    {
+        $this->apiVersion = $version;
+    }
+
+    /**
+     * Set the API Region
+     * Note: US is the default but will also attempt to route to the correct region
+     * @see https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis/
+     *
+     * @param string $region
+     * @return void
+     */
+    public function setRegion(string $region): void
+    {
+        $region = strtoupper($region);
+
+        if (in_array($region, ['US', 'EU', 'AU'])) {
+
+            switch ($region) {
+                case 'US':
+                    $this->setBaseURL('https://api.intercom.io/');
+                    break;
+                case 'EU':
+                    $this->setBaseURL('https://api.eu.intercom.io/');
+                    break;
+                case 'AU':
+                    $this->setBaseURL('https://api.au.intercom.io/');
+                    break;
+            }
+
+        } else {
+            throw new InvalidArgumentException("Invalid region. Intercom API Region must be EU, USA, or AU.");
+        }
+    }
+
+    /**
+     * Get the current region
+     *
+     * @return string|null
+     */
+    public function getRegion(): ?string
+    {
+        return $this->region;
     }
 
     protected function defaultConfig(): array
